@@ -1,6 +1,6 @@
 const BASE_URL = 'https://fleetcatalog.disturbingbyte.pt/v1' // this is the base URL for the Fleet Catalog API
 
-// function for making requests to the Fleet Catalog API (GET), endpoint is the specific query to be made to the API
+// function for making requests to the fleetByte Catalog API (GET), endpoint is the specific query to be made to the API
 async function request(endpoint) {
   const response = await fetch(`${BASE_URL}${endpoint}`)
 
@@ -11,7 +11,7 @@ async function request(endpoint) {
   return response.json()
 }
 
-// function for getting the makes of vehicles from the Fleet Catalog API, with optional search parameter
+// function for getting the makes of vehicles from the fleetByte Catalog API, with optional search parameter
 export async function getMakes(search = '') {
   const params = new URLSearchParams({
     page: '1',
@@ -25,7 +25,7 @@ export async function getMakes(search = '') {
   return request(`/makes?${params.toString()}`)
 }
 
-// function for getting the models of vehicles from the Fleet Catalog API, with optional search parameter
+// function for getting the models of vehicles from the fleetByte Catalog API, with optional search parameter
 export async function getModels(makeId, search = '') {
   const params = new URLSearchParams({
     page: '1',
@@ -41,7 +41,7 @@ export async function getModels(makeId, search = '') {
   )
 }
 
-// function for getting the variants of vehicles from the Fleet Catalog API, with optional search parameter and filters
+// function for getting the variants of vehicles from the fleetByte Catalog API, with optional search parameter and filters
 export async function getVariants(modelId, filters = {}) {
   const params = new URLSearchParams({
     page: '1',
@@ -69,7 +69,7 @@ export async function getVariants(modelId, filters = {}) {
   )
 }
 
-// function for getting the detailed information of a specific variant (variantId) from the Fleet Catalog API
+// function for getting the detailed information of a specific variant (variantId) from the fleetByte Catalog API
 export async function getVariantDetails(variantId) {
   return request(`/variants/${encodeURIComponent(variantId)}`)
 }

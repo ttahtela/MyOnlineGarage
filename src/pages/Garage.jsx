@@ -1,5 +1,12 @@
+import TestButton from '../components/TestButton'
+
 function Garage() {
-  return <h2>My Garage</h2>
+  return (
+    <div>
+      <h2>My Garage</h2>
+      <TestButton />
+    </div>
+  )
 }
 
 export default Garage
