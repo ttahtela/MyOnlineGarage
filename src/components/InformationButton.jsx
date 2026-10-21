@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { getVariantDetails } from '../services/vehicleApi'
 
-function TestButton() {
+function InformationButton({variantId}) {
   const [result, setResult] = useState(null) // state for storing the API response
   const [error, setError] = useState('') // state when the response has an error
   const [isLoading, setIsLoading] = useState(false) // state when the response is loading
@@ -12,9 +12,7 @@ function TestButton() {
     setResult(null)
 
     try {
-      const response = await getVariantDetails(
-        'c520f1a8-ae06-4b4e-a8f4-1560d64252c9'
-      )
+      const response = await getVariantDetails(variantId)
       setResult(response)
     } catch (requestError) {
       setError(requestError.message)
@@ -26,7 +24,7 @@ function TestButton() {
   return (
     <div>
       <button onClick={handleClick} disabled={isLoading}>
-        {isLoading ? 'Testing API...' : 'Test API'}
+        {isLoading ? 'Loading...' : 'Show Variant Details'}
       </button>
       {result && (
         <pre>{JSON.stringify(result, null, 2)}</pre>
@@ -36,4 +34,4 @@ function TestButton() {
   )
 }
 
-export default TestButton
+export default InformationButton
