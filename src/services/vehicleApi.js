@@ -1,4 +1,5 @@
 const BASE_URL = 'https://fleetcatalog.disturbingbyte.pt/v1' // this is the base URL for the Fleet Catalog API
+const PAGE_SIZE = 100
 
 // function for making requests to the fleetByte Catalog API (GET), endpoint is the specific query to be made to the API
 async function request(endpoint) {
@@ -11,62 +12,84 @@ async function request(endpoint) {
   return response.json()
 }
 
+// helper function requesting all pages of the fleetByte Catalog API, instead of limiting to just the 100 items per page
+async function requestAllPages(createEndpoint) {
+  const items = []
+  let response
+
+  for (let page = 1; ; page += 1) {
+    response = await request(createEndpoint(page))
+
+    if (!Array.isArray(response.items)) {
+      throw new Error('Vehicle API response is missing its items list')
+    }
+
+    items.push(...response.items)
+
+    if (response.items.length < PAGE_SIZE) {
+      return { ...response, items }
+    }
+  }
+}
+
 // function for getting the makes of vehicles from the fleetByte Catalog API, with optional search parameter
 export async function getMakes(search = '') {
-  const params = new URLSearchParams({
-    page: '1',
-    pageSize: '20',
+  return requestAllPages((page) => {
+    const params = new URLSearchParams({
+      page: String(page),
+      pageSize: String(PAGE_SIZE),
+    })
+
+    if (search.trim()) {
+      params.set('search', search.trim())
+    }
+
+    return `/makes?${params.toString()}`
   })
-
-  if (search.trim()) {
-    params.set('search', search.trim())
-  }
-
-  return request(`/makes?${params.toString()}`)
 }
 
 // function for getting the models of vehicles from the fleetByte Catalog API, with optional search parameter
 export async function getModels(makeId, search = '') {
-  const params = new URLSearchParams({
-    page: '1',
-    pageSize: '100',
+  return requestAllPages((page) => {
+    const params = new URLSearchParams({
+      page: String(page),
+      pageSize: String(PAGE_SIZE),
+    })
+
+    if (search.trim()) {
+      params.set('search', search.trim())
+    }
+
+    return `/makes/${encodeURIComponent(makeId)}/models?${params.toString()}`
   })
-
-  if (search.trim()) {
-    params.set('search', search.trim())
-  }
-
-  return request(
-    `/makes/${encodeURIComponent(makeId)}/models?${params.toString()}`
-  )
 }
 
 // function for getting the variants of vehicles from the fleetByte Catalog API, with optional search parameter and filters
 export async function getVariants(modelId, filters = {}) {
-  const params = new URLSearchParams({
-    page: '1',
-    pageSize: '100',
+  return requestAllPages((page) => {
+    const params = new URLSearchParams({
+      page: String(page),
+      pageSize: String(PAGE_SIZE),
+    })
+
+    if (filters.search) {
+      params.set('search', filters.search)
+    }
+
+    if (filters.year) {
+      params.set('year', String(filters.year))
+    }
+
+    if (filters.fuelType) {
+      params.set('fuelType', filters.fuelType)
+    }
+
+    if (filters.gearboxType) {
+      params.set('gearboxType', filters.gearboxType)
+    }
+
+    return `/models/${encodeURIComponent(modelId)}/variants?${params.toString()}`
   })
-
-  if (filters.search) {
-    params.set('search', filters.search)
-  }
-
-  if (filters.year) {
-    params.set('year', String(filters.year))
-  }
-
-  if (filters.fuelType) {
-    params.set('fuelType', filters.fuelType)
-  }
-
-  if (filters.gearboxType) {
-    params.set('gearboxType', filters.gearboxType)
-  }
-
-  return request(
-    `/models/${encodeURIComponent(modelId)}/variants?${params.toString()}`
-  )
 }
 
 // function for getting the detailed information of a specific variant (variantId) from the fleetByte Catalog API

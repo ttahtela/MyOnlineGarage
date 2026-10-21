@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { getVariantDetails } from '../services/vehicleApi'
 
 function TestButton() {
-  const [result, setResult] = useState(null)
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [result, setResult] = useState(null) // state for storing the API response
+  const [error, setError] = useState('') // state when the response has an error
+  const [isLoading, setIsLoading] = useState(false) // state when the response is loading
 
   const handleClick = async () => {
     setIsLoading(true)

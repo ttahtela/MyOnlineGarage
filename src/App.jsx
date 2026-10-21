@@ -1,3 +1,4 @@
+import "bootswatch/dist/quartz/bootstrap.min.css";
 import { Routes, Route, Navigate } from 'react-router'
 import Garage from './pages/Garage'
 import Maintenance from './pages/Maintenance'
