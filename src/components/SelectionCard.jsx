@@ -38,7 +38,7 @@ function SelectionCard({ title, depth, parentId, onSelect }) {
                     setOptions(loadedOptions)
                     const firstOption = loadedOptions[0]?.value ?? ''
                     setSelectedOption(firstOption)
-                    onSelect?.(firstOption)
+                    onSelect?.(firstOption, loadedOptions[0]?.label ?? '')
                 }
             } catch (requestError) {
                 if (!cancelled) {
@@ -59,7 +59,8 @@ function SelectionCard({ title, depth, parentId, onSelect }) {
 
     function handleSelect(value) {
         setSelectedOption(value)
-        onSelect?.(value)
+        const selected = options.find((option) => option.value === value)
+        onSelect?.(value, selected?.label ?? '')
     }
 
     return (
