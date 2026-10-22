@@ -45,7 +45,8 @@ function Garage() {
         modelName={selectedModelName}
         variantName={selectedVariantName}
       />
-    </div>
+      
+      </div>
   )
 }
 
