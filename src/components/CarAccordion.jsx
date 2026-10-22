@@ -1,10 +1,12 @@
 
 import { useState } from 'react'
 
-function CarAccordion({ id, simpleInfo, currentResult, currentError, isLoading }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const headingId = `car-heading-${id}`
-  const collapseId = `car-collapse-${id}`
+// CarAccordion component displays an accordion for a car which when opened up shows the details of the car
+function CarAccordion({ car }) {
+  const [isOpen, setIsOpen] = useState(false) // accordion open/closed state
+  const headingId = `car-heading-${car.id}` // unique id for the accordion heading
+  const collapseId = `car-collapse-${car.id}` // unique id for the accordion collapse section
+  const simpleInfo = [car.makeName, car.modelName, car.variantName].filter(Boolean).join(' ') // car make, model and variant names to show in the accordion heading
 
   return (
     <div className="accordion">
@@ -26,12 +28,12 @@ function CarAccordion({ id, simpleInfo, currentResult, currentError, isLoading }
           aria-labelledby={headingId}
         >
           <div className="accordion-body">
-            {isLoading ? (
+            {car.status === 'loading' ? (
               <p>Loading vehicle details...</p>
-            ) : currentError ? (
-              <p role="alert">API request failed: {currentError}</p>
-            ) : currentResult ? (
-              <pre style={{ textAlign: 'left' }}>{JSON.stringify(currentResult, null, 2)}</pre>
+            ) : car.error ? (
+              <p role="alert">API request failed: {car.error}</p>
+            ) : car.details !== null ? (
+              <pre style={{ textAlign: 'left' }}>{JSON.stringify(car.details, null, 2)}</pre>
             ) : null}
           </div>
         </div>

@@ -1,8 +1,11 @@
 import { useCallback, useState } from 'react'
 import InformationButton from '../components/InformationButton'
+import CarAccordion from '../components/CarAccordion'
 import SelectionCard from '../components/SelectionCard'
+import useCars from '../context/useCars'
 
 function Garage() {
+  const { cars } = useCars()
   const [selectedMakeId, setSelectedMakeId] = useState('')
   const [selectedMakeName, setSelectedMakeName] = useState('')
   const [selectedModelId, setSelectedModelId] = useState('')
@@ -45,8 +48,10 @@ function Garage() {
         modelName={selectedModelName}
         variantName={selectedVariantName}
       />
-      
-      </div>
+      {cars.map((car) => (
+        <CarAccordion key={car.id} car={car} />
+      ))}
+    </div>
   )
 }
 

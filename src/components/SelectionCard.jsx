@@ -4,7 +4,7 @@ import { getMakes, getModels, getVariants } from '../services/vehicleApi'
 
 function SelectionCard({ title, depth, parentId, onSelect }) {
     const [selectedOption, setSelectedOption] = useState('') // state for storing the selected option
-    const [options, setOptions] = useState([]) // state for storing the options (full list) loaded from the API
+    const [options, setOptions] = useState([]) // state for storing the make, model or variant options (full list) loaded from the API
     const [error, setError] = useState('') // error state
     const [isLoading, setIsLoading] = useState(false) // loading state
 
@@ -36,9 +36,6 @@ function SelectionCard({ title, depth, parentId, onSelect }) {
 
                 if (!cancelled) {
                     setOptions(loadedOptions)
-                    const firstOption = loadedOptions[0]?.value ?? ''
-                    setSelectedOption(firstOption)
-                    onSelect?.(firstOption, loadedOptions[0]?.label ?? '')
                 }
             } catch (requestError) {
                 if (!cancelled) {
