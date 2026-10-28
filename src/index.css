@@ -54,6 +54,10 @@ body {
   margin: 0;
 }
 
+.car-action-button {
+  width: 6rem;
+}
+
 .navbar-full-width {
   position: relative;
   left: 50%;

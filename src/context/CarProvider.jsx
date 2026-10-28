@@ -37,7 +37,16 @@ function CarProvider({ children }) {
     setCars((currentCars) => currentCars.filter((car) => car.id !== id))
   }, [])
 
-  const value = useMemo(() => ({ cars, addCar, removeCar }), [cars, addCar, removeCar])
+  const updateCarDetails = useCallback((id, details) => {
+    setCars((currentCars) =>
+      currentCars.map((car) => (car.id === id ? { ...car, details } : car)), // car details updated here, React re-renders
+    )
+  }, [])
+
+  const value = useMemo(
+    () => ({ cars, addCar, removeCar, updateCarDetails }),
+    [cars, addCar, removeCar, updateCarDetails],
+  )
 
   return <CarContext.Provider value={value}>{children}</CarContext.Provider>
 }
