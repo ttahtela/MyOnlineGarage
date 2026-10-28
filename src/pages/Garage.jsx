@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import InformationButton from '../components/InformationButton'
+import AddCarButton from '../components/AddCarButton'
 import CarAccordion from '../components/CarAccordion'
 import SelectionCard from '../components/SelectionCard'
 import useCars from '../context/useCars'
@@ -42,15 +42,19 @@ function Garage() {
           <SelectionCard title="Select a variant" depth={3} parentId={selectedModelId} onSelect={handleVariantSelect} />
         </div>
       </div>
-      <InformationButton
+      <div className="d-grid gap-1">
+        <AddCarButton
         variantId={selectedVariantId}
         makeName={selectedMakeName}
         modelName={selectedModelName}
         variantName={selectedVariantName}
-      />
-      {cars.map((car) => (
-        <CarAccordion key={car.id} car={car} />
-      ))}
+        />
+
+        {cars.map((car) => (
+          <CarAccordion key={car.id} car={car} />
+        ))}
+      </div>
+      
     </div>
   )
 }

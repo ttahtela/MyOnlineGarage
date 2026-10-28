@@ -33,7 +33,11 @@ function CarProvider({ children }) {
     }
   }, [])
 
-  const value = useMemo(() => ({ cars, addCar }), [cars, addCar])
+  const removeCar = useCallback((id) => {
+    setCars((currentCars) => currentCars.filter((car) => car.id !== id))
+  }, [])
+
+  const value = useMemo(() => ({ cars, addCar, removeCar }), [cars, addCar, removeCar])
 
   return <CarContext.Provider value={value}>{children}</CarContext.Provider>
 }
