@@ -1,5 +1,12 @@
+import MaintenanceTable from "../components/MaintenanceTable"
+
 function Maintenance() {
-  return <h2>Maintenance</h2>
+  return (
+    <div>
+      <h2>Maintenance</h2>
+      <MaintenanceTable/>
+    </div>
+  )
 }
 
 export default Maintenance
