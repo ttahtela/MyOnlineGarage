@@ -5,7 +5,7 @@ import SelectionCard from '../components/SelectionCard'
 import useCars from '../context/useCars'
 
 function Garage() {
-  const { cars } = useCars()
+  const { cars, storageError } = useCars()
   const [selectedMakeId, setSelectedMakeId] = useState('')
   const [selectedMakeName, setSelectedMakeName] = useState('')
   const [selectedModelId, setSelectedModelId] = useState('')
@@ -31,6 +31,7 @@ function Garage() {
   return (
     <div>
       <h2>My Garage</h2>
+      {storageError && <p className="alert alert-warning" role="alert">{storageError}</p>}
       <div className="row">
         <div className="col-12 col-md-4">
           <SelectionCard title="Select a make" depth={1} onSelect={handleMakeSelect} />
