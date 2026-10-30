@@ -208,27 +208,30 @@ function MaintenanceTable() {
             </tr>
           </thead>
           <tbody>
-            {maintenance.map((record) => (
+            {maintenance.map((record, index) => (
               <tr key={record.id}>
                 <th scope="row">{getCarName(cars.find((car) => car.id === record.carId)) || record.car}</th>
                 <td>{record.type}</td>
                 <td>
-                  <div className="position-relative">
+                  <div
+                    className="position-relative"
+                    onMouseEnter={() => setOpenDescriptionId(record.id)}
+                    onMouseLeave={() => setOpenDescriptionId(null)}
+                  >
                     <button
                       className={`accordion-button maintenance-description-button${openDescriptionId === record.id ? '' : ' collapsed'}`}
                       type="button"
                       aria-expanded={openDescriptionId === record.id}
                       aria-controls={`maintenance-description-${record.id}`}
-                      onMouseOver={() => setOpenDescriptionId(
-                        openDescriptionId === record.id ? null : record.id,
-                      )}
                     >
                       {record.descriptionHeading}
                     </button>
                     {openDescriptionId === record.id && (
                       <div
                         id={`maintenance-description-${record.id}`}
-                        className="position-absolute start-0 top-100 bg-body border rounded shadow p-3"
+                        className={`position-absolute start-0 ${
+                          index === maintenance.length - 1 ? 'bottom-100' : 'top-100'
+                        } bg-body border rounded shadow p-3`}
                         style={{ zIndex: 10, width: 'min(24rem, 80vw)' }}
                       >
                         {record.longDescription || 'No long description provided.'}
