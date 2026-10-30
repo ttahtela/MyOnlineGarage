@@ -169,7 +169,7 @@ function CarAccordion({ car }) {
       {car.details !== null && (
         <button
           type="button"
-          className={`btn car-action-button ${isEditing ? 'btn-primary' : 'btn-outline-info'} flex-shrink-0`}
+          className={`btn btn-lg ${isEditing ? 'btn-primary' : 'btn-outline-info'} flex-shrink-0`}
           onClick={isEditing ? handleSave : handleEdit}
         >
           {isEditing ? 'Save' : 'Edit'}
@@ -178,7 +178,7 @@ function CarAccordion({ car }) {
 
       <button
         type="button"
-        className={`btn car-action-button ${isEditing ? 'btn-secondary' : 'btn-outline-danger'} flex-shrink-0`}
+        className={`btn btn-lg ${isEditing ? 'btn-secondary' : 'btn-outline-danger'} flex-shrink-0`}
         onClick={isEditing ? handleCancel : handleRemove}
       >
         {isEditing ? 'Cancel' : 'Remove'}

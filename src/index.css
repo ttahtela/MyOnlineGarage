@@ -54,10 +54,6 @@ body {
   margin: 0;
 }
 
-.car-action-button {
-  width: 6rem;
-}
-
 .maintenance-description-button {
   justify-content: center;
   position: relative;
