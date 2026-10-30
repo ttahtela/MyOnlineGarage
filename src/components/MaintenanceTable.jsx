@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import useCars from '../context/useCars'
-
-const STORAGE_KEY = 'my-online-garage-maintenance' // localStorage key
-const maintenanceTypes = ['Fix', 'Upgrade', 'Maintenance', 'Other']
+import {
+  getCarName,
+  loadMaintenance,
+  MAINTENANCE_STORAGE_KEY,
+  maintenanceTypes,
+} from '../utils/maintenance'
 
 const emptyDraft = {
   carId: '',
@@ -11,48 +14,6 @@ const emptyDraft = {
   longDescription: '',
   price: '',
 }
-
-// gets the car name similar to the simpleInfo
-function getCarName(car) {
-  if (!car) {
-    return ''
-  }
-
-  return [car.makeName, car.modelName, car.variantName].filter(Boolean).join(' ') ||
-    `Vehicle ${car.id}`
-}
-
-// loads maintenance records from localStorage
-function loadMaintenance() {
-  try {
-    const savedMaintenance = window.localStorage.getItem(STORAGE_KEY) // load from localStorage
-    const records = savedMaintenance === null ? [] : JSON.parse(savedMaintenance) // parse JSON into a JavaScript array called records
-
-    // checking if the data has the expected shape or throw error
-    if (!Array.isArray(records) || records.some((record) =>
-      record === null ||
-      typeof record !== 'object' ||
-      typeof record.id !== 'string' ||
-      typeof record.car !== 'string' ||
-      (record.carId !== undefined && (!Number.isInteger(record.carId) || record.carId <= 0)) ||
-      typeof record.type !== 'string' ||
-      typeof record.descriptionHeading !== 'string' ||
-      typeof record.longDescription !== 'string' ||
-      typeof record.price !== 'number' ||
-      !Number.isFinite(record.price)
-    )) {
-      throw new Error('Saved maintenance records have an invalid format.')
-    }
-
-    return { records, error: '' }
-  } catch (error) {
-    return {
-      records: [],
-      error: error instanceof Error ? error.message : 'Could not load saved maintenance records.',
-    }
-  }
-}
-
 
 // maintenance table component
 function MaintenanceTable() {
@@ -68,7 +29,7 @@ function MaintenanceTable() {
   const saveMaintenance = (records) => {
     let error = ''
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(records))
+      window.localStorage.setItem(MAINTENANCE_STORAGE_KEY, JSON.stringify(records))
     } catch (storageFailure) {
       error = storageFailure instanceof Error
         ? storageFailure.message
