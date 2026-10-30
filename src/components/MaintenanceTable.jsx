@@ -154,6 +154,7 @@ function MaintenanceTable() {
             className="form-control"
             value={draft.descriptionHeading}
             onChange={(event) => setDraft({ ...draft, descriptionHeading: event.target.value })}
+            maxLength={25}
             required
           />
         </div>
@@ -164,7 +165,7 @@ function MaintenanceTable() {
           <textarea
             id="maintenance-long-description"
             className="form-control"
-            rows="2"
+            rows="1"
             value={draft.longDescription}
             onChange={(event) => setDraft({ ...draft, longDescription: event.target.value })}
           />
