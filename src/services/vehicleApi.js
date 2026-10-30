@@ -32,61 +32,37 @@ async function requestAllPages(createEndpoint) {
   }
 }
 
-// function for getting the makes of vehicles from the fleetByte Catalog API, with optional search parameter
-export async function getMakes(search = '') {
+// function for getting the makes of vehicles from the Fleet Catalog API
+export async function getMakes() {
   return requestAllPages((page) => {
     const params = new URLSearchParams({
       page: String(page),
       pageSize: String(PAGE_SIZE),
     })
-
-    if (search.trim()) {
-      params.set('search', search.trim())
-    }
 
     return `/makes?${params.toString()}`
   })
 }
 
-// function for getting the models of vehicles from the fleetByte Catalog API, with optional search parameter
-export async function getModels(makeId, search = '') {
+// function for getting the models of vehicles from the Fleet Catalog API
+export async function getModels(makeId) {
   return requestAllPages((page) => {
     const params = new URLSearchParams({
       page: String(page),
       pageSize: String(PAGE_SIZE),
     })
-
-    if (search.trim()) {
-      params.set('search', search.trim())
-    }
 
     return `/makes/${encodeURIComponent(makeId)}/models?${params.toString()}`
   })
 }
 
-// function for getting the variants of vehicles from the fleetByte Catalog API, with optional search parameter and filters
-export async function getVariants(modelId, filters = {}) {
+// function for getting the variants of vehicles from the Fleet Catalog API
+export async function getVariants(modelId) {
   return requestAllPages((page) => {
     const params = new URLSearchParams({
       page: String(page),
       pageSize: String(PAGE_SIZE),
     })
-
-    if (filters.search) {
-      params.set('search', filters.search)
-    }
-
-    if (filters.year) {
-      params.set('year', String(filters.year))
-    }
-
-    if (filters.fuelType) {
-      params.set('fuelType', filters.fuelType)
-    }
-
-    if (filters.gearboxType) {
-      params.set('gearboxType', filters.gearboxType)
-    }
 
     return `/models/${encodeURIComponent(modelId)}/variants?${params.toString()}`
   })
