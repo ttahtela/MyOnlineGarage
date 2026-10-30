@@ -195,7 +195,8 @@ function MaintenanceTable() {
         </div>
         </form>
 
-      <table className="table table-hover">
+      <div className="table-responsive">
+        <table className="table table-hover">
           <thead>
             <tr>
               <th scope="col">Car</th>
@@ -218,7 +219,7 @@ function MaintenanceTable() {
                       type="button"
                       aria-expanded={openDescriptionId === record.id}
                       aria-controls={`maintenance-description-${record.id}`}
-                      onClick={() => setOpenDescriptionId(
+                      onMouseOver={() => setOpenDescriptionId(
                         openDescriptionId === record.id ? null : record.id,
                       )}
                     >
@@ -263,6 +264,7 @@ function MaintenanceTable() {
             )}
           </tbody>
         </table>
+      </div>
     </div>
   )
 }

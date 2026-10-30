@@ -63,7 +63,7 @@ function Expenses() {
             ))}
           </tbody>
           <tfoot>
-            <tr>
+            <tr className="table-primary">
               <th scope="row">Total cost</th>
               <td>{totalCost.toFixed(2)}€</td>
             </tr>
