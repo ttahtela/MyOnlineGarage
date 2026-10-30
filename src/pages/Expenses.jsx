@@ -46,6 +46,10 @@ function Expenses() {
         )}
       </div>
 
+      <h3>
+        Expenses report
+      </h3>
+
       {selectedCar && (
         <table className="table table-hover">
           <thead>

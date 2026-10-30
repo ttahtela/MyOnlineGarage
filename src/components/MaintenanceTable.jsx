@@ -195,6 +195,9 @@ function MaintenanceTable() {
         </div>
         </form>
 
+      <h3>
+        Maintenance records
+      </h3>
       <div className="table-responsive">
         <table className="table table-hover">
           <thead>
